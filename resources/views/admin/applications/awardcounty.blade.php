@@ -1,14 +1,35 @@
 @extends('layouts.admin')
 @section('content')
 <div class="container">
+  <div class="row">
+    <form method="POST" action="{{ route('admin.applications.updatebalance') }}" enctype="multipart/form-data">
+      @csrf
+    <div class="col-md-6"></div>
+    <div class="col-md-3 form-group">
+    
+      <input type="hidden" name="ward_id" id="ward_id" value="{{get_ward_id()}}">
+         <input class="form-control" type="number" name="amount" id="amount" value="" step="0.01" required>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+            Allocate Funds
+        </button>
+    </div>
+  </form>
+    </div>
+    
+  </div>
     <br />
     <h3 >CDF AWARD FORM</h3>
     <br />
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading" style="align: right">
         <h3 class="panel-title"><b>{{$cons}} Ward Application List</b></h3>
+        
       </div>
       <div class="panel-body">
+        
         <div class="table-responsive">
           <form method="POST" action="{{ route("admin.applications.updatecounty") }}" enctype="multipart/form-data">
       
@@ -37,14 +58,19 @@
                 <td>{{$row->course->name }}</td>
                 <td>{{ $row->ward->name }}</td>
                 <td>{{ $row->sub_county->name }}</td>
-                <td>{{ $row->county_amount_awarded }}</td>
+                <td>{{ number_format($row->county_amount_awarded) }}</td>
                 @php
                 $ward_sum_counter += $row->county_amount_awarded; 
                 @endphp
               </tr>
               @endforeach
-              {{$ward_sum_counter}}
-            </tbody>
+              <tr>
+                <td colspan="6" style="text-align: right">Total</td>
+                <td>  <b> {{number_format($ward_sum_counter)}}</b>
+                </td>
+              </tr>
+              </tbody>
+
            
           </table>
         </div>

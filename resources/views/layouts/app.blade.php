@@ -19,6 +19,7 @@
 <body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
     @yield('content')
     @yield('scripts')
+    <footer style="text-align: center"> <b>&copy;2023 Mandera County Government Bursary Application Management System. </b></footer>
 </body>
 
 </html>

@@ -340,6 +340,18 @@ class ApplicationController extends Controller
         //return view('admin.applications.index');
         return redirect()->back()->withSuccess('IT WORKS!');
     }
+
+
+    public function updatebalance(Request $request) {
+
+        $wid = $request->ward_id;
+        $bal = $request->amount;
+        DB::table('wards')->where('id', $wid)->update(array('amount' => $bal));
+        
+        //return view('admin.applications.index');
+        return redirect()->back()->withSuccess('Allocation Updated!');
+    }
+
     
     public function updatecdf(Request $request) {
 

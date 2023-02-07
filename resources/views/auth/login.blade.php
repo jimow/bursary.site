@@ -1,16 +1,23 @@
 @extends('layouts.app')
+
+@section('style')
+<style>
+body {
+background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5)),
+                  src="{{url('bg.jpg')}}";
+}
+</style>
+<img src='bg.jpg' />
+@endsection
 @section('content')
-<div class="login-box">
-    <div class="login-logo">
-        <div class="login-logo">
-            <a href="{{ route('admin.home') }}">
-                {{ trans('panel.site_title') }}
-            </a>
-        </div>
-    </div>
+
+   
+	
     <div class="card">
-        <div class="card-body login-card-body">
-            <p class="login-box-msg">
+        <div class="card-body">
+		<div class="row" >
+		 <div class="col-md-4 bg-secondary bg-gradient" style="border-radius: 10px; margin-right: 10px">
+            <p >
                 {{ trans('global.login') }}
             </p>
 
@@ -74,8 +81,37 @@
                     {{ trans('global.register') }}
                 </a>
             </p>
+			</div> <!-- End Of Colums 1 -->
+           
+			<div class="col-md-7" style="height: 500px" >
+                <div class="vr"></div>
+			<h4><b>Welcome to Mandera County Bursary Management System</b></h4>
+            <p>For you to successfully apply for bursary, you must follow the instructions given below</p>
+           <ol>
+            <li>You are only allowed to apply bursary to only one and only one ward. The system does not allow that</li>
+            <li>You can only have one user account per applicant. Trying to have fake accounts will lead to automatic disqualifications</li>
+            <li>Provide all the required documents. The system will not accept application without required documents.</li>
+            <li>If you encounter an error during the application process, make sure you have filled all the required fields</li>
+            <li>Once you apply, you can't reapply. Take your time during the application process</li>
+            <li>Make sure the provided information is correct and accurate</li>
+           </ol>
+            </p>
+            <hr color="gray" width="80%">
+            <h4><b>Required Documents for Application</b></h4>
+            <ul>
+                <li>Admission Letter</li>
+                <li>Father's Identity Card / Death Certificate in Case father is dead</li>
+                <li>Mother's Identity Card</li>
+                <li>Fees Structure - Important for bursary consideration</li>
+                
+            </ul>
+          	</div>
+		</div> <!-- End Div Row -->
+       
         </div>
         <!-- /.login-card-body -->
     </div>
-</div>
+
 @endsection
+
+

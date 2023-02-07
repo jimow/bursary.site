@@ -1,6 +1,7 @@
 <?php
 use App\Models\Application;
 use App\Models\FinancialYear;
+use App\Models\Ward;
 function test() {
 
     echo "This is my helper function";
@@ -15,6 +16,18 @@ function check_if_applied_cdf($id) {
    if ($app >= 1) {
     return true;
    }
+}
+function get_ward_id() {
+    $rol = get_logged_in_role();
+    $app = Ward::where('name','=', $rol)
+    
+    ->get();
+    $wid = '';
+    foreach($app as $ap) {
+        $wid = $ap->id;
+    }
+    return $wid;
+
 }
 function check_if_system_is_open() {
     $fy = config('global.settings.fy');

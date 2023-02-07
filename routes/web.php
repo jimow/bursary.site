@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
    
     Route::get('applications/awardcounty','ApplicationController@app_county')->name('applications.app_county');
     Route::post('applications/updatecounty','ApplicationController@awardcounty')->name('applications.updatecounty');
+    Route::post('applications/updatebalance','ApplicationController@updatebalance')->name('applications.updatebalance');
    
     Route::post('applications/updatecdf','ApplicationController@updatecdf')->name('applications.updatecdf');
     Route::post('applications/updateCdfAward','ApplicationController@updateCdfAward')->name('applications.updateCdfAward');

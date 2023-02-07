@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 <div class="container">
+  <div class="form-group col-md-4">
+    <label  for="amount">{{ trans('cruds.application.fields.fee_balance') }}</label>
+    <input class="form-control" type="number" name="amount" id="amount" value="" step="0.01" required>
+  </div>
     <br />
     <h3 >CDF AWARD FORM</h3>
     <br />
