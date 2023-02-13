@@ -4,9 +4,13 @@
 
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            {{ date("Y-m-d h:m:s")}}
+            @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
                {{ check_if_system_is_open()}}    
-           another testing {{ config('global.settings.fy') }} testing
+           
            @if ( check_if_applied_county($id) != 1 && check_if_applied_cdf($id) != 1 )
             
            @if(get_logged_in_role() != 'Admin')
@@ -19,7 +23,7 @@
            @endif
 
            @if ( check_if_applied_county($id) != 1 && check_if_applied_cdf($id) == 1 )
-           <form method="POST" action="{{ route('admin.applications.updatecounty') }}" enctype="multipart/form-data">
+           <form method="POST" action="{{ route('admin.applications.applycounty') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" value="{{$id}}" name="userid">
             <div class="form-group">
@@ -44,6 +48,31 @@
 
          </div>
     </div>
+@endcan
+
+
+<div class="row">
+    <div class="col-md-8"></div>
+@can('can_cdf')
+<div class="col-md-4">
+    <a class="btn btn-success" href="{{ route('admin.applications.app_cdf') }}">
+   Click Here to CDF Award Bursary
+         </a>
+ </div>
+ 
+</div>
+@endcan
+@can('can_county')
+<div class="row">
+    <div class="col-md-4"></div>
+
+<div class="col-md-8">
+    <a class="btn btn-success" href="{{ route('admin.applications.app_county') }}">
+   Click Here to County Award Bursary
+         </a>
+ </div>
+
+</div>
 @endcan
 <div class="card">
     <div class="card-header">

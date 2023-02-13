@@ -99,10 +99,13 @@ class HomeController
        
        }
        $wards = Ward::all();
- 
+       
        foreach($wards as $wa) {
         if ($title == $wa->name) {
+         
+        
           $id = $wa->id;
+         
           $name =  Application::groupBy('ward_id')
           ->selectRaw('count(*) as total, ward_id')
           ->where('ward_id','=', $id)
@@ -144,6 +147,87 @@ class HomeController
        
      
         
+       }
+       if ($title == "Lafey Ward") {
+           $id = 14;
+         
+          $name =  Application::groupBy('ward_id')
+          ->selectRaw('count(*) as total, ward_id')
+          ->where('ward_id','=', $id)
+          ->where('county_applied','=',1)
+          ->get();
+          $amount_awarded = Application::groupBy('ward_id')
+            ->selectRaw('SUM(county_amount_awarded) AS sum, ward_id')
+            ->where('ward_id','=',$id)
+            ->where('county_applied','=',1)
+            ->get();
+       
+          
+          $amount_awarded_per_course = Application::groupBy('course_id')
+            ->selectRaw('SUM(county_amount_awarded) AS sum, course_id')
+            ->where('ward_id','=', $id)
+            ->where('county_applied','=',1)
+            ->get();
+          $amount_awarded_per_gender = Application::groupBy('gender')
+            ->selectRaw('SUM(county_amount_awarded) AS sum, gender')
+            ->where('ward_id','=', $id)
+            ->where('county_applied','=',1)
+            ->get();
+          $application_per_course = Application::groupBy('course_id')
+            ->selectRaw('count(*) AS total_course, course_id')
+            ->where('ward_id','=', $id)
+            ->where('county_applied','=',1)
+            ->get();
+          $application_per_gender = Application::groupBy('gender')
+            ->selectRaw('count(*) AS total_gender, gender')
+            ->where('ward_id','=', $id)
+            ->where('county_applied','=',1)
+            ->get();
+         
+            $ward_name = "Lafey Ward";
+            $c_g = 0;
+        return view('countydashboard',compact('ward_name','c_g','count_app_g','count_app_c','count_award_c','count_award_s','count_award_w','name','count_s','count_w','application_per_gender','application_per_course','amount_awarded_per_course','amount_awarded_per_gender'));
+        }
+
+        if ($title == "Banissa Ward") {
+          $id = 22;
+        
+         $name =  Application::groupBy('ward_id')
+         ->selectRaw('count(*) as total, ward_id')
+         ->where('ward_id','=', $id)
+         ->where('county_applied','=',1)
+         ->get();
+         $amount_awarded = Application::groupBy('ward_id')
+           ->selectRaw('SUM(county_amount_awarded) AS sum, ward_id')
+           ->where('ward_id','=',$id)
+           ->where('county_applied','=',1)
+           ->get();
+      
+         
+         $amount_awarded_per_course = Application::groupBy('course_id')
+           ->selectRaw('SUM(county_amount_awarded) AS sum, course_id')
+           ->where('ward_id','=', $id)
+           ->where('county_applied','=',1)
+           ->get();
+         $amount_awarded_per_gender = Application::groupBy('gender')
+           ->selectRaw('SUM(county_amount_awarded) AS sum, gender')
+           ->where('ward_id','=', $id)
+           ->where('county_applied','=',1)
+           ->get();
+         $application_per_course = Application::groupBy('course_id')
+           ->selectRaw('count(*) AS total_course, course_id')
+           ->where('ward_id','=', $id)
+           ->where('county_applied','=',1)
+           ->get();
+         $application_per_gender = Application::groupBy('gender')
+           ->selectRaw('count(*) AS total_gender, gender')
+           ->where('ward_id','=', $id)
+           ->where('county_applied','=',1)
+           ->get();
+        
+           $ward_name = "Banissa Ward";
+           $c_g = 0;
+       return view('countydashboard',compact('ward_name','c_g','count_app_g','count_app_c','count_award_c','count_award_s','count_award_w','name','count_s','count_w','application_per_gender','application_per_course','amount_awarded_per_course','amount_awarded_per_gender'));
        }
        if ($title == 'Admin') {
         $name =  Application::groupBy('ward_id')

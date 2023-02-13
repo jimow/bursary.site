@@ -35,6 +35,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                 </li>
+                <li class="text-primary"><b>{{ date("d-m-Y") }}</b></li>
             </ul>
 
             <!-- Right navbar links -->
@@ -53,6 +54,8 @@
                 </ul>
             @endif
             <ul class="navbar-nav ml-auto">
+                
+               <span class="text-primary"> <b>{{ Auth::user()->name }}</b></span>
                 <li class="nav-item dropdown notifications-menu">
                     <a href="#" class="nav-link" data-toggle="dropdown">
                         <i class="far fa-bell"></i>
@@ -64,6 +67,7 @@
                             @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        
                         @if(count($alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) > 0)
                             @foreach($alerts as $alert)
                                 <div class="dropdown-item">
@@ -79,6 +83,7 @@
                                 {{ trans('global.no_alerts') }}
                             </div>
                         @endif
+                        
                     </div>
                 </li>
             </ul>

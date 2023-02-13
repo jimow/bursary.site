@@ -20,13 +20,13 @@
           <table id="editable" class="table table-bordered table-striped">
             <thead>
               <tr class="bg bg-primary">
-         
-                <th>ID</th>
+                <th>Counter</th>
+                <th>Application ID</th>
                 <th>Full Names</th>
                 <th>Institution</th>
                 <th>Course </th>
                 <th>Ward</th>
-                <th>Sub County</th>
+               
                 <th>Amount Awarded</th>
                 
               </tr>
@@ -34,20 +34,31 @@
             <tbody>
               @foreach($data as $row)
               <tr>
-              
+                <td>{{$counter++ }}</td>
                 <td>{{ $row->id }}</td>
                 <td>{{ $row->first_name }} {{ $row->last_name}}</td>
                 <td>{{ $row->institution}}</td>
                 <td>{{$row->course->name }}</td>
                 <td>{{ $row->ward->name }}</td>
-                <td>{{ $row->sub_county->name }}</td>
-                <td>{{ $row->cdf_amount_awarded }}</td>
-              
+                <td style="text-align:right">{{ $row->cdf_amount_awarded }}</td>
+                @php
+                $sc_counter += $row->cdf_amount_awarded; 
+                @endphp
               </tr>
               @endforeach
+              
+              <tr class="bg bg-info">
+                <td colspan="5" style="text-align:right">Total</td>
+                <td></td>
+                <td style="text-align: right">{{ number_format($sc_counter) }}.00</td>
+              </tr>
+              
             </tbody>
-           
+           <tr>
+            <td colspan="7" style="text-align: center"><b>{{ $data->links() }} </b></td>
+           </tr>
           </table>
+          
         </div>
       </form>
       </div>
@@ -63,12 +74,14 @@
           'X-CSRF-Token' : $("input[name=_token]").val()
         }
       });
+
+    
     
       $('#editable').Tabledit({
         url:'{{ route("admin.applications.update_cdf") }}',
         dataType:"json",
         columns:{
-          identifier:[0, 'id'],
+          identifier:[1, 'id'],
           editable:[[6, 'cdf_amount_awarded']]
         },
       

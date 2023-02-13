@@ -33,9 +33,7 @@ class ApplicationController extends Controller
     {
         abort_if(Gate::denies('application_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
-       if (check_if_system_is_open()) {
-        return view('locked');
-       }
+        
         $id = Auth::id();
         $county = 0;
         $roles = Auth::user()->roles()->get();
@@ -98,7 +96,26 @@ class ApplicationController extends Controller
 
                
             }
+            
            } 
+           if ($title == "Lafey Ward") {
+            $wid = $wa->id;
+            $query = Application::with(['user', 'ward', 'sub_county', 'financial_year', 'type', 'course'])
+            ->where('ward_id', '=', 14)
+            ->where('county_applied','=',1)
+            ->select(sprintf('%s.*', (new Application())->table));
+            $cons = "Lafey Ward";
+           
+          }
+          if ($title == "Banissa Ward") {
+            $wid = $wa->id;
+            $query = Application::with(['user', 'ward', 'sub_county', 'financial_year', 'type', 'course'])
+            ->where('ward_id', '=', 22)
+            ->where('county_applied','=',1)
+            ->select(sprintf('%s.*', (new Application())->table));
+
+            $cons = "Banissa Ward";
+        }
                
 
             $table = Datatables::of($query);//->removeColumn('county_applied','county_amount_awarded','recommended_for_county');
@@ -140,13 +157,9 @@ class ApplicationController extends Controller
                 return $row->first_name ? $row->first_name : '';
             });
             $table->editColumn('last_name', function ($row) {
-                $test  = result();
-                if ($test == 1) {
-                    return "This is a test for everyone";
-                }
-                else {
+                
                 return $row->last_name ? $row->last_name : '';
-                }
+                
             });
             $table->editColumn('other_names', function ($row) {
                 return $row->other_names ? $row->other_names : '';
@@ -212,9 +225,12 @@ class ApplicationController extends Controller
                 return $row->student_grade ? $row->student_grade : '';
             });
             $table->editColumn('recommended', function ($row) {
-                
+                if (get_if_county_or_cdf() == "COUNTY") {
+                    return "";
+                }
+                else {
                 return $row->recommended ? Application::RECOMMENDED_RADIO[$row->recommended] : '';
-               
+                }
             });
             $table->addColumn('ward_name', function ($row) {
                 return $row->ward ? $row->ward->name : '';
@@ -231,22 +247,31 @@ class ApplicationController extends Controller
                 return $row->voter_card ? $row->voter_card : '';
             });
             $table->editColumn('cdf_amount_awarded', function ($row) {
-            
+                if (get_if_county_or_cdf() == "COUNTY") {
+                    return "";
+                }
+                else {
                 return $row->cdf_amount_awarded ? $row->cdf_amount_awarded : '';
-           
+                }
             });
             
-                $table->editColumn('county_amount_awarded', function ($row) {
-                   
-                    return $row->county_amount_awarded ? $row->county_amount_awarded : '';
-                   
-                });
+            $table->editColumn('county_amount_awarded', function ($row) {
+                if (get_if_county_or_cdf() == "CDF") {
+                    return "";
+                }
+                else {
+                return $row->county_amount_awarded ? $row->county_amount_awarded : '';
+                }  
+            });
               
             
              $table->editColumn('recommended_for_county', function ($row) {
-                
+                if (get_if_county_or_cdf() == "CDF") {
+                    return "";
+                }
+                else {
                 return $row->recommended_for_county ? Application::RECOMMENDED_FOR_COUNTY_RADIO[$row->recommended_for_county] : '';
-                
+                }
             });
             $table->addColumn('financial_year_name', function ($row) {
                 return $row->financial_year ? $row->financial_year->name : '';
@@ -260,15 +285,21 @@ class ApplicationController extends Controller
                 return $row->gender ? Application::GENDER_RADIO[$row->gender] : '';
             });
             $table->editColumn('cdf_applied', function ($row) {
-                
+                if (get_if_county_or_cdf() == "COUNTY") {
+                    return "";
+                }
+                else {
                 return $row->cdf_applied ? Application::CDF_APPLIED_RADIO[$row->cdf_applied] : '';
-               
+                }
             });
           
             $table->editColumn('county_applied', function ($row) {
-                
+                if (get_if_county_or_cdf() == "CDF") {
+                    return "";
+                }
+                else {
                 return $row->county_applied ? Application::COUNTY_APPLIED_RADIO[$row->county_applied] : '';
-            
+                }
             });
         
       
@@ -316,14 +347,14 @@ class ApplicationController extends Controller
         foreach($s_counties as $county) {
         if($title == $county->name) {
         
-        return view('admin.applications.index2', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
+        //return view('admin.applications.index2', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
    
         }
       }
       foreach($ward as $wa) {
         if($title == $wa->name) {
         
-        return view('admin.applications.county', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
+       // return view('admin.applications.county', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
    
         }
     }
@@ -332,7 +363,7 @@ class ApplicationController extends Controller
         return view('admin.applications.index', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
     }
 
-    public function updatecounty(Request $request) {
+    public function apply_county(Request $request) {
 
         $id2 = $request->userid;
         DB::table('applications')->where('user_id', $id2)->update(array('county_applied' => 1));
@@ -442,7 +473,7 @@ class ApplicationController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $application->id]);
         }
 
-        return redirect()->route('admin.applications.index');
+        return redirect()->route('admin.applications.index')->with('status', 'Applications successfully submitted');
     }
 
     public function edit(Application $application)
@@ -476,12 +507,31 @@ class ApplicationController extends Controller
         $w_id = $w->id;
         if ($role == $w->name) {
             $cons = $w->name;
-        $data= Application::with(['ward', 'sub_county'])
+       $data= Application::with(['ward', 'sub_county'])
         ->where('ward_id','=',$w_id)
+        ->where('county_applied', '=', 1)
+        ->paginate(5);
+        
+     
+        }
+         }
+
+         
+        if ($role == "Lafey Ward") {
+            $cons = "Lafey Ward";
+        $data= Application::with(['ward', 'sub_county'])
+        ->where('ward_id','=',14)
         ->where('county_applied', '=', 1)
         ->get();
         }
-         }
+
+        if ($role == "Banissa Ward") {
+            $cons = "Banissa Ward";
+        $data= Application::with(['ward', 'sub_county'])
+        ->where('ward_id','=',22)
+        ->where('county_applied', '=', 1)
+        ->get();
+        }
              
     	return view('admin.applications.awardcounty', compact('ward_sum_counter','cons','data'));
     }
@@ -491,9 +541,10 @@ class ApplicationController extends Controller
     	//$data = DB::table('applications')->get();
         
         $role = get_logged_in_role();
-
+        $sc_counter = 0;
         $sc = SubCounty::all();
         $cons = '';
+        $counter = 1;
         foreach($sc as $s) {
        
      
@@ -503,11 +554,11 @@ class ApplicationController extends Controller
         $data= Application::with(['ward', 'sub_county'])
         ->where('sub_county_id','=',$sub_id)
         ->where('cdf_applied', '=', 1)
-        ->get();
+        ->paginate(3);
         }
          }
              
-    	return view('admin.applications.awardcdf', compact('data','cons'));
+    	return view('admin.applications.awardcdf', compact('data','cons','sc_counter','counter'));
     }
 
 
@@ -521,6 +572,7 @@ class ApplicationController extends Controller
     		{
     			$data = array(
     				'county_amount_awarded'	=>	$request->county_amount_awarded,
+                    'recommended_for_county' => 'yes',
     			);
     			DB::table('applications')
     				->where('id', $request->id)
@@ -537,10 +589,12 @@ class ApplicationController extends Controller
 
         if($request->ajax())
     	{
+           
     		if($request->action == 'edit')
     		{
     			$data = array(
     				'cdf_amount_awarded'	=>	$request->cdf_amount_awarded,
+                    'recommended' => 'yes', 
     			);
     			DB::table('applications')
     				->where('id', $request->id)
@@ -555,6 +609,13 @@ class ApplicationController extends Controller
    
     public function update(UpdateApplicationRequest $request, Application $application)
     {
+        $w = $request->ward_id;
+        $sid = Ward::find($w);
+        $sid2 = $sid->sub_county_id;
+
+        $request->merge([
+            'sub_county_id' => $sid2,
+        ]);
         $application->update($request->all());
 
         if ($request->input('fathers_identity_card', false)) {

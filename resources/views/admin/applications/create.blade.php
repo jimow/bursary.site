@@ -105,7 +105,7 @@
                 <label>{{ trans('cruds.application.fields.disability') }}</label>
                 @foreach(App\Models\Application::DISABILITY_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('disability') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="disability_{{ $key }}" name="disability" value="{{ $key }}" {{ old('disability', '') === (string) $key ? 'checked' : '' }}>
+                        <input  type="radio" id="disability_{{ $key }}" name="disability" value="{{ $key }}" {{ old('disability', '') === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="disability_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -128,7 +128,7 @@
                 <label>{{ trans('cruds.application.fields.received_bursary_before') }}</label>
                 @foreach(App\Models\Application::RECEIVED_BURSARY_BEFORE_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('received_bursary_before') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="received_bursary_before_{{ $key }}" name="received_bursary_before" value="{{ $key }}" {{ old('received_bursary_before', '') === (string) $key ? 'checked' : '' }}>
+                        <input  type="radio" id="received_bursary_before_{{ $key }}" name="received_bursary_before" value="{{ $key }}" {{ old('received_bursary_before', '') === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="received_bursary_before_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -141,7 +141,7 @@
                 <label class="required">{{ trans('cruds.application.fields.both_parents_alive') }}</label>
                 @foreach(App\Models\Application::BOTH_PARENTS_ALIVE_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('both_parents_alive') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="both_parents_alive_{{ $key }}" name="both_parents_alive" value="{{ $key }}" {{ old('both_parents_alive', '') === (string) $key ? 'checked' : '' }} required>
+                        <input  type="radio" id="both_parents_alive_{{ $key }}" name="both_parents_alive" value="{{ $key }}" {{ old('both_parents_alive', '') === (string) $key ? 'checked' : '' }} required>
                         <label class="form-check-label" for="both_parents_alive_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -246,7 +246,7 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <label>{{ trans('cruds.application.fields.on_scholarships') }}</label>
-                <select class="form-control {{ $errors->has('on_scholarships') ? 'is-invalid' : '' }}" name="on_scholarships" id="on_scholarships">
+                <select class="form-control select2 {{ $errors->has('on_scholarships') ? 'is-invalid' : '' }}" name="on_scholarships" id="on_scholarships">
                     <option value disabled {{ old('on_scholarships', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                     @foreach(App\Models\Application::ON_SCHOLARSHIPS_SELECT as $key => $label)
                         <option value="{{ $key }}" {{ old('on_scholarships', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -266,12 +266,12 @@
                 <span class="help-block">{{ trans('cruds.application.fields.voter_card_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label for="financial_year_id">Type of Bursary</label>
-                <select class="form-control select2 {{ $errors->has('financial_year') ? 'is-invalid' : '' }}" name="application_type" id="application_type">
-                  
-                        <option value="1" {{ old('financial_year_id') == $id ? 'selected' : '' }}>CDF Bursary</option>
-                        <option value="2" {{ old('financial_year_id') == $id ? 'selected' : '' }}>County Bursary Fund</option>
-                       
+                <label for="application_type">Type of Bursary</label>
+                <select class="form-control select2 {{ $errors->has('application_type') ? 'is-invalid' : '' }}" name="application_type" id="application_type">
+                    <option value="2" {{ old('application_type') == $id ? 'selected' : '' }}>County Bursary Fund</option>
+                      
+                        <option value="1" {{ old('application_type') == $id ? 'selected' : '' }}>CDF Bursary</option>
+                         
                 </select>
                 @if($errors->has('financial_year'))
                     <span class="text-danger">{{ $errors->first('financial_year') }}</span>
@@ -297,7 +297,7 @@
                 <label>{{ trans('cruds.application.fields.gender') }}</label>
                 @foreach(App\Models\Application::GENDER_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('gender') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="gender_{{ $key }}" name="gender" value="{{ $key }}" {{ old('gender', '') === (string) $key ? 'checked' : '' }}>
+                        <input  type="radio" id="gender_{{ $key }}" name="gender" value="{{ $key }}" {{ old('gender', '') === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="gender_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -321,7 +321,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="fathers_identity_card">{{ trans('cruds.application.fields.fathers_identity_card') }}</label>
+                <label for="fathers_identity_card">{{ trans('cruds.application.fields.fathers_identity_card') }} / Death Certificate</label>
                 <div class="needsclick dropzone {{ $errors->has('fathers_identity_card') ? 'is-invalid' : '' }}" id="fathers_identity_card-dropzone">
                 </div>
                 @if($errors->has('fathers_identity_card'))
@@ -354,7 +354,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label class="required" for="fee_balance_attach">{{ trans('cruds.application.fields.fee_balance_attach') }}</label>
+                <label class="required" for="fee_balance_attach">Student ID Card</label>
                 <div class="needsclick dropzone {{ $errors->has('fee_balance_attach') ? 'is-invalid' : '' }}" id="fee_balance_attach-dropzone">
                 </div>
                 @if($errors->has('fee_balance_attach'))
@@ -363,7 +363,7 @@
                 <span class="help-block">{{ trans('cruds.application.fields.fee_balance_attach_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label for="attach_voter_card">{{ trans('cruds.application.fields.attach_voter_card') }}</label>
+                <label for="attach_voter_card">Admission Letter</label>
                 <div class="needsclick dropzone {{ $errors->has('attach_voter_card') ? 'is-invalid' : '' }}" id="attach_voter_card-dropzone">
                 </div>
                 @if($errors->has('attach_voter_card'))
@@ -394,7 +394,7 @@
             </div>
         </div>
             <div class="form-group">
-                <button class="btn btn-danger" type="submit">
+                <button class="btn btn-success" type="submit">
                     Submit Application
                 </button>
             </div>

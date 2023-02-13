@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    Administrator's Dashboard
+                    Administrator's Dashboard 
 </div>
 
                 <div class="card-body">
@@ -15,8 +15,7 @@
                         </div>
                     @endif
               
-
-<div class="row">
+                    <div class="row">
 <div class="col-md-6">
 
 <table class="table">

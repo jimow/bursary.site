@@ -1,41 +1,49 @@
 @extends('layouts.admin')
 @section('content')
-<div class="container">
+
   <div class="row">
-    <form method="POST" action="{{ route('admin.applications.updatebalance') }}" enctype="multipart/form-data">
-      @csrf
-    <div class="col-md-6"></div>
-    <div class="col-md-3 form-group">
+    <div class="col-md-5">
+      
+   <form method="POST" action="{{ route('admin.applications.updatebalance') }}" enctype="multipart/form-data">
+    @csrf
+      <label  for="amount" class="text-primary"><h3>Allocations:</h3></label>
+     <b> {{ number_format(get_ward_allocation(get_ward_id()))}}</b>
+     &nbsp;&nbsp;&nbsp;&nbsp;<label  for="amount" class="text-primary"><b>Balance</b></label>
+     <b> {{ number_format(get_ward_allocation(get_ward_id()))}}</b>
     
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
       <input type="hidden" name="ward_id" id="ward_id" value="{{get_ward_id()}}">
-         <input class="form-control" type="number" name="amount" id="amount" value="" step="0.01" required>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group">
-        <button class="btn btn-danger" type="submit">
-            Allocate Funds
-        </button>
-    </div>
-  </form>
-    </div>
+         <input type="text" name="amount" id="amount" value="" step="0.01" required>
+  
     
+    
+      <button class="btn btn-success" type="submit">
+        Allocate Funds
+    </button>
+
+</form>
+    </div>
   </div>
+
     <br />
     <h3 >CDF AWARD FORM</h3>
     <br />
     <div class="panel panel-default">
-      <div class="panel-heading" style="align: right">
-        <h3 class="panel-title"><b>{{$cons}} Ward Application List</b></h3>
-        
+      <div class="panel-heading">
+        <h3 class="panel-title"><b>{{$cons}}</b> Application List</h3>
       </div>
       <div class="panel-body">
-        
         <div class="table-responsive">
           <form method="POST" action="{{ route("admin.applications.updatecounty") }}" enctype="multipart/form-data">
       
           @csrf
           <table id="editable" class="table table-bordered table-striped">
             <thead>
+              <tr>
+                <td colspan="7"><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></td>
+              </tr>
               <tr class="bg bg-primary">
          
                 <th>ID</th>
@@ -51,37 +59,39 @@
             <tbody>
               @foreach($data as $row)
               <tr>
-             
+              
                 <td>{{ $row->id }}</td>
                 <td>{{ $row->first_name }} {{ $row->last_name}}</td>
                 <td>{{ $row->institution}}</td>
                 <td>{{$row->course->name }}</td>
                 <td>{{ $row->ward->name }}</td>
                 <td>{{ $row->sub_county->name }}</td>
-                <td>{{ number_format($row->county_amount_awarded) }}</td>
-                @php
-                $ward_sum_counter += $row->county_amount_awarded; 
-                @endphp
+                <td style="text-align: right">{{ $row->county_amount_awarded }}</td>
+              @php
+                $ward_sum_counter += $row->county_amount_awarded;  
+              @endphp
+              
               </tr>
               @endforeach
-              <tr>
-                <td colspan="6" style="text-align: right">Total</td>
-                <td>  <b> {{number_format($ward_sum_counter)}}</b>
-                </td>
+              <tr class="bg bg-primary">
+                <td colspan="6" style="text-align: right">Total Allocation</td>
+                <td style="text-align: right"><b>{{ number_format($ward_sum_counter) }}.00</b></td>
               </tr>
-              </tbody>
-
+            </tbody>
            
           </table>
         </div>
       </form>
       </div>
     </div>
-  </div>
+  
   @endsection
 @section('scripts')
   <script type="text/javascript">
+
+
     $(document).ready(function(){
+     
        
       $.ajaxSetup({
         headers:{
@@ -96,18 +106,26 @@
           identifier:[0, 'id'],
           editable:[[6, 'county_amount_awarded']]
         },
-        
+      
         restoreButton:false,
+
         onSuccess:function(data, textStatus, jqXHR)
         {
+          //check if the amount is enough
+
+          location.reload();
           if(data.action == 'delete')
           {
             alert("Not Allowed");
           }
         }
       });
+
+    
     
     });
+
+    
     </script>
 @endsection
   

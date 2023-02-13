@@ -14,9 +14,28 @@
     <link href="https://cdn.jsdelivr.net/npm/icheck-bootstrap@3.0.1/icheck-bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
     @yield('styles')
+    <style>
+     body {
+            background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');-->
+           	background-size: cover;
+			margin-top: 10px;
+        }
+        .form-container {
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 #0003;
+        }
+        .sidebar {
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 #0003;
+        }
+    </style>
 </head>
 
-<body class="header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden login-page">
+<body>
     @yield('content')
     @yield('scripts')
     <footer style="text-align: center"> <b>&copy;2023 Mandera County Government Bursary Application Management System. </b></footer>

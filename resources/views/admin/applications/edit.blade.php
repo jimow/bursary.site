@@ -107,10 +107,11 @@
                 <label>{{ trans('cruds.application.fields.disability') }}</label>
                 @foreach(App\Models\Application::DISABILITY_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('disability') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="disability_{{ $key }}" name="disability" value="{{ $key }}" {{ old('disability', $application->disability) === (string) $key ? 'checked' : '' }}>
+                        <input  type="radio" id="disability_{{ $key }}" name="disability" value="{{ $key }}" {{ old('disability', $application->disability) === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="disability_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
+               
                 @if($errors->has('disability'))
                     <span class="text-danger">{{ $errors->first('disability') }}</span>
                 @endif
@@ -128,7 +129,7 @@
                 <label>{{ trans('cruds.application.fields.received_bursary_before') }}</label>
                 @foreach(App\Models\Application::RECEIVED_BURSARY_BEFORE_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('received_bursary_before') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="received_bursary_before_{{ $key }}" name="received_bursary_before" value="{{ $key }}" {{ old('received_bursary_before', $application->received_bursary_before) === (string) $key ? 'checked' : '' }}>
+                        <input type="radio" id="received_bursary_before_{{ $key }}" name="received_bursary_before" value="{{ $key }}" {{ old('received_bursary_before', $application->received_bursary_before) === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="received_bursary_before_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -141,7 +142,7 @@
                 <label class="required">{{ trans('cruds.application.fields.both_parents_alive') }}</label>
                 @foreach(App\Models\Application::BOTH_PARENTS_ALIVE_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('both_parents_alive') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="both_parents_alive_{{ $key }}" name="both_parents_alive" value="{{ $key }}" {{ old('both_parents_alive', $application->both_parents_alive) === (string) $key ? 'checked' : '' }} required>
+                        <input  type="radio" id="both_parents_alive_{{ $key }}" name="both_parents_alive" value="{{ $key }}" {{ old('both_parents_alive', $application->both_parents_alive) === (string) $key ? 'checked' : '' }} required>
                         <label class="form-check-label" for="both_parents_alive_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
@@ -298,7 +299,7 @@
                 <label>{{ trans('cruds.application.fields.gender') }}</label>
                 @foreach(App\Models\Application::GENDER_RADIO as $key => $label)
                     <div class="form-check {{ $errors->has('gender') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="gender_{{ $key }}" name="gender" value="{{ $key }}" {{ old('gender', $application->gender) === (string) $key ? 'checked' : '' }}>
+                        <input type="radio" id="gender_{{ $key }}" name="gender" value="{{ $key }}" {{ old('gender', $application->gender) === (string) $key ? 'checked' : '' }}>
                         <label class="form-check-label" for="gender_{{ $key }}">{{ $label }}</label>
                     </div>
                 @endforeach
