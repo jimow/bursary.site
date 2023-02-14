@@ -397,7 +397,7 @@ class ApplicationController extends Controller
     {
         abort_if(Gate::denies('application_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
-        if (check_if_system_is_open()) {
+        if (!check_if_system_is_open()) {
             return view('locked');
         }
         $id2 = Auth::id();

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Bursary',
+    'site_title' => 'Mandera County Bursary Application Management System',
 ];

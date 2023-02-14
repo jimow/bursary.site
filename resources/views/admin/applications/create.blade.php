@@ -115,8 +115,8 @@
                 <span class="help-block">{{ trans('cruds.application.fields.disability_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label class="required" for="specify_disability">{{ trans('cruds.application.fields.specify_disability') }}</label>
-                <textarea class="form-control {{ $errors->has('specify_disability') ? 'is-invalid' : '' }}" name="specify_disability" id="specify_disability" required>{{ old('specify_disability') }}</textarea>
+                <label  for="specify_disability">{{ trans('cruds.application.fields.specify_disability') }}</label>
+                <textarea class="form-control {{ $errors->has('specify_disability') ? 'is-invalid' : '' }}" name="specify_disability" id="specify_disability">{{ old('specify_disability') }}</textarea>
                 @if($errors->has('specify_disability'))
                     <span class="text-danger">{{ $errors->first('specify_disability') }}</span>
                 @endif
@@ -273,8 +273,8 @@
                         <option value="1" {{ old('application_type') == $id ? 'selected' : '' }}>CDF Bursary</option>
                          
                 </select>
-                @if($errors->has('financial_year'))
-                    <span class="text-danger">{{ $errors->first('financial_year') }}</span>
+                @if($errors->has('application_type'))
+                    <span class="text-danger">{{ $errors->first('application_type') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.financial_year_helper') }}</span>
             </div>
@@ -321,7 +321,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="fathers_identity_card">{{ trans('cruds.application.fields.fathers_identity_card') }} / Death Certificate</label>
+                <label class="required" for="fathers_identity_card">{{ trans('cruds.application.fields.fathers_identity_card') }} / Death Certificate</label>
                 <div class="needsclick dropzone {{ $errors->has('fathers_identity_card') ? 'is-invalid' : '' }}" id="fathers_identity_card-dropzone">
                 </div>
                 @if($errors->has('fathers_identity_card'))
@@ -347,7 +347,7 @@
                 <div class="needsclick dropzone {{ $errors->has('fees_structure') ? 'is-invalid' : '' }}" id="fees_structure-dropzone">
                 </div>
                 @if($errors->has('fees_structure'))
-                    <span class="text-danger">{{ $errors->first('fees_structure') }}</span>
+                    <span class="text-danger"><b>{{ $errors->first('fees_structure') }}</b></span>
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.fees_structure_helper') }}</span>
             </div>
@@ -358,22 +358,22 @@
                 <div class="needsclick dropzone {{ $errors->has('fee_balance_attach') ? 'is-invalid' : '' }}" id="fee_balance_attach-dropzone">
                 </div>
                 @if($errors->has('fee_balance_attach'))
-                    <span class="text-danger">{{ $errors->first('fee_balance_attach') }}</span>
+                    <span class="text-danger"><b>Student ID Card field is required</b></span>
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.fee_balance_attach_helper') }}</span>
             </div>
             <div class="form-group col-md-4">
-                <label for="attach_voter_card">Admission Letter</label>
+                <label class="required" for="attach_voter_card">{{ trans('cruds.application.fields.admission_letter')}}</label>
                 <div class="needsclick dropzone {{ $errors->has('attach_voter_card') ? 'is-invalid' : '' }}" id="attach_voter_card-dropzone">
                 </div>
                 @if($errors->has('attach_voter_card'))
-                    <span class="text-danger">{{ $errors->first('attach_voter_card') }}</span>
+                    <span class="text-danger"><b>Admission letter field is required</b></span>
                 @endif
                 <span class="help-block">{{ trans('cruds.application.fields.attach_voter_card_helper') }}</span>
             </div>
 
             <div class="form-group col-md-4">
-                <label class="required" for="attach_student_grade">{{ trans('cruds.application.fields.attach_student_grade') }}</label>
+                <label for="attach_student_grade">{{ trans('cruds.application.fields.attach_student_grade') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('attach_student_grade') ? 'is-invalid' : '' }}" id="attach_student_grade-dropzone">
                 </div>
                 @if($errors->has('attach_student_grade'))

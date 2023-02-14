@@ -53,6 +53,9 @@ class StoreApplicationRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'fathers_identity_card' => [
+                'required',
+            ],
             'admission_number' => [
                 'string',
                 'required',
@@ -63,7 +66,7 @@ class StoreApplicationRequest extends FormRequest
                 'required',
             ],
             'specify_disability' => [
-                'required',
+                'string',
             ],
             'both_parents_alive' => [
                 'required',
@@ -100,6 +103,9 @@ class StoreApplicationRequest extends FormRequest
             ],
             'student_grade' => [
                 'string',
+                
+            ],
+            'attach_voter_card' => [
                 'required',
             ],
             'ward_id' => [
@@ -114,9 +120,7 @@ class StoreApplicationRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'attach_student_grade' => [
-                'required',
-            ],
+           
             'fees_structure' => [
                 'required',
             ],

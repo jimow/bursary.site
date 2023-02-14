@@ -9,7 +9,7 @@
                 {{ session('status') }}
             </div>
         @endif
-               {{ check_if_system_is_open()}}    
+              
            
            @if ( check_if_applied_county($id) != 1 && check_if_applied_cdf($id) != 1 )
             
@@ -570,7 +570,7 @@
     select: true,
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 100,
+    pageLength: 10,
   };
   let table = $('.datatable-Application').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
