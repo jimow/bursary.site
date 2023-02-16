@@ -343,6 +343,7 @@ class ApplicationController extends Controller
         $financial_years = FinancialYear::get();
         $institutions    = Institution::get();
         $courses         = Course::get();
+        $app_id = 8;
         $id = Auth::id();
         foreach($s_counties as $county) {
         if($title == $county->name) {
@@ -360,7 +361,7 @@ class ApplicationController extends Controller
     }
           
         
-        return view('admin.applications.index', compact('title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
+        return view('admin.applications.index', compact('app_id','title','id','title','users', 'wards', 'sub_counties', 'financial_years', 'institutions', 'courses'));
     }
 
     public function apply_county(Request $request) {

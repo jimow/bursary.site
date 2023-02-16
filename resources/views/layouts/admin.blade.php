@@ -32,10 +32,14 @@
         <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
+                
                 <li class="nav-item">
+                    
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                 </li>
+                <li><marquee direction="left" height="30" width="600" bgcolor="#11FF11"><b>The website will undergo scheduled maintenance on Thursday, 16th Feb 2023, from 6.00 pm to Friday, 17th Feb 2023, at 6.00 AM, during which services will be temporarily unavailable. We apologize for any inconveniences.</b></marquee></li>
                 <li class="text-primary"><b>{{ date("d-m-Y") }}</b></li>
+                <li><p class="moving-text">This is another Moving Text</p></li>
             </ul>
 
             <!-- Right navbar links -->

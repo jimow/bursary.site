@@ -62,6 +62,15 @@
  
 </div>
 @endcan
+@can('can_user')
+<div class="col-md-4">
+    <a class="btn btn-success" href="{{ route('admin.applications.edit', $app_id) }}">
+   Update Your Application
+         </a>
+ </div>
+ 
+</div>
+@endcan
 @can('can_county')
 <div class="row">
     <div class="col-md-4"></div>
@@ -570,7 +579,7 @@
     select: true,
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 10,
+    pageLength: 100,
   };
   let table = $('.datatable-Application').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
